@@ -84,7 +84,7 @@ function draw_trail(x, y, x2, y2) {
   //ellipse(x, y, 5, 5);
   if (x2) {
     strokeWeight(3);
-    line(x, y, x2, y2)
+    line(x, y, x2, y2);
   }
 }
 
@@ -98,42 +98,49 @@ function draw() {
 
     var agents = timesteps[timestep];
     if (agents) {
-      for (var t = 1; t < trails.length; ++t) {
-        var a_t_last = trails[t-1];
-        var a_t = trails[t];
-        for (var a in Object.keys(a_t)) {
-          if (a_t_last[a]) { 
-            //for (var a = 0; a < a_t.length; ++a) {
-            draw_trail(a_t[a].pos.x * ratio.x, a_t[a].pos.y * ratio.y, a_t_last[a].pos.x * ratio.x, a_t_last[a].pos.y * ratio.y);
-          }
-        }
-      }
 
-      for (var a in Object.keys(agents))
+
+      for (var ag in Object.keys(agents)) {
       //for (var a = 0; ba < agents.length; ++a) {
-        var agent = agents[a];
+        if (!agents[ag]) {
+          continue;
+        }
+        var agent = agents[ag];
         //ellipse(agent.pos.x * ratio.x, agent.pos.y * ratio.y, 10, 10);
         draw_agent(agent.pos.x * ratio.x, agent.pos.y * ratio.y, agent.vel.x, agent.vel.y);
         //ellipse(timestep, timestep, 10, 10);
       }
-      if (timestep < timesteps.length - 1) {
+      //if (timestep < timesteps.length - 1) {
 
-        if (timestep % 5 == 0) {
-          if (trails.length > 50) {
+        if (timestep % 10 == 0) {
+          if (trails.length > 1000) {
             trails.shift();
           }
           trails.push(agents);
         }
         timestep += 1;
-      }
+      //}
 
     }
 
   }
+  if (trails) {
+    for (var t = 1; t < trails.length; ++t) {
+      var a_t_last = trails[t-1];
+      var a_t = trails[t];
+      for (var a in Object.keys(a_t)) {
+        if (a_t_last[a] && a_t[a]) {
+          //for (var a = 0; a < a_t.length; ++a) {
+          draw_trail(a_t[a].pos.x * ratio.x, a_t[a].pos.y * ratio.y,
+            a_t_last[a].pos.x * ratio.x, a_t_last[a].pos.y * ratio.y);
+        }
+      }
+    }
+  }
 
-};
+}
 
 function mousePressed() {
 
   redraw();
-};
+}
