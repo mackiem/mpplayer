@@ -121,22 +121,27 @@ function draw() {
         timestep += 1;
       //}
 
-    }
+
 
   }
-  if (trails) {
-    for (var t = 1; t < trails.length; ++t) {
-      var a_t_last = trails[t-1];
-      var a_t = trails[t];
-      for (var a in Object.keys(a_t)) {
-        if (a_t_last[a] && a_t[a]) {
-          //for (var a = 0; a < a_t.length; ++a) {
-          draw_trail(a_t[a].pos.x * ratio.x, a_t[a].pos.y * ratio.y,
-            a_t_last[a].pos.x * ratio.x, a_t_last[a].pos.y * ratio.y);
-        }
+} else {
+  noLoop();
+
+}
+if (trails) {
+  for (var t = 1; t < trails.length; ++t) {
+    var a_t_last = trails[t-1];
+    var a_t = trails[t];
+    for (var a in Object.keys(a_t)) {
+      if (a_t_last[a] && a_t[a]) {
+        //for (var a = 0; a < a_t.length; ++a) {
+        draw_trail(a_t[a].pos.x * ratio.x, a_t[a].pos.y * ratio.y,
+          a_t_last[a].pos.x * ratio.x, a_t_last[a].pos.y * ratio.y);
       }
     }
   }
+}
+
 
 }
 
